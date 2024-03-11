@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Döngüsü ile Sayı Yazdırma</title>
+<style>
+    span {
+        margin: 5px;
+    }
+    .red-bold {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+    <button id="siralaButton" onclick="sirala()">Sırala</button>
+    <button id="rastgeleButton" onclick="rastgeleSayi()">Rastgele Sayı Seç</button>
+    <br><br>
+    <div id="sayilar"></div>
+
+    <script>
+        var oncekiRastgeleSayi = null;
+
+        function sirala() {
+            var sayilarDiv = document.getElementById("sayilar");
+            sayilarDiv.innerHTML = "";
+
+            for (var i = 1; i <= 99; i++) {
+                var span = document.createElement("span");
+                span.textContent = i;
+                sayilarDiv.appendChild(span);
+
+                if (i % 10 === 0) {
+                    sayilarDiv.appendChild(document.createElement("br"));
+                }
+            }
+
+            document.getElementById("siralaButton").disabled = true;
+            document.getElementById("rastgeleButton").disabled = false;
+            oncekiRastgeleSayi = null;
+        }
+
+        function rastgeleSayi() {
+            var randomSayi = Math.floor(Math.random() * 99) + 1;
+            var spans = document.querySelectorAll("#sayilar span");
+
+            spans.forEach(function(span) {
+                if (span.textContent == randomSayi) {
+                    span.classList.add("red-bold");
+                } else {
+                    span.classList.remove("red-bold");
+                }
+            });
+
+            if (oncekiRastgeleSayi !== null) {
+                spans[oncekiRastgeleSayi - 1].classList.remove("red-bold");
+            }
+
+            oncekiRastgeleSayi = randomSayi;
+        }
+    </script>
+</body>
+</html>
